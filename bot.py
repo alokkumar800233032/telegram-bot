@@ -57,7 +57,11 @@ async def welcome(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for member in update.message.new_chat_members:
         name = member.mention_html()
 
-        await context.bot.send_photo(
+        await update.effective_chat.send_message(
+    WELCOME_TEXT.format(name=name),
+    parse_mode="HTML",
+    reply_markup=buttons,
+)
             chat_id=update.effective_chat.id,
             photo=PHOTO_ID,
             caption=WELCOME_TEXT.format(name=name),
