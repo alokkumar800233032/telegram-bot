@@ -9,7 +9,7 @@ from telegram.ext import (
     filters,
 )
 
-BOT_TOKEN = os.environ["8870938287:AAEhe1vhVEdbQAeevR_PqH-ZH8XYyUw0oOI"]
+BOT_TOKEN = os.environ["TOKEN"]
 
 WELCOME_TEXT = """
 🎉 <b>WELCOME</b> 🎉
