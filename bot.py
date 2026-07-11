@@ -36,4 +36,5 @@ WELCOME_TEXT = """
 👑 Owner : https://t.me/ak_gamers
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOKEN = "8870938287:AAHXMEPO2qf432pPfSpIZuzW2cWgus6AD5k
 """
