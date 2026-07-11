@@ -1,8 +1,6 @@
-from telegram import (
-    Update,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-)
+import os
+
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -11,18 +9,16 @@ from telegram.ext import (
     filters,
 )
 
-BOT_TOKEN = "8870938287:AAEhe1vhVEdbQAeevR_PqH-ZH8XYyUw0oOI"
-
-PHOTO_ID = "AgACAgUAAxkBAAEgUBpqUcUbVBabPK_S147HlOiTtKU40AACdhBrG_xMkFZ9ceP8_CUJyQEAAwIAA3kAAzwE"
+BOT_TOKEN = os.environ["8870938287:AAEhe1vhVEdbQAeevR_PqH-ZH8XYyUw0oOI"]
 
 WELCOME_TEXT = """
-🎉 **WELCOME** 🎉
+🎉 <b>WELCOME</b> 🎉
 
 👋 Hello {name}
 
 ❤️ Welcome to AK GAMER CHAT ❤️
 
-📜 GROUP RULES
+📜 <b>GROUP RULES</b>
 
 1️⃣ Respect Everyone 🤝
 2️⃣ 🚫 No Spam / No Abuse
@@ -40,14 +36,14 @@ buttons = InlineKeyboardMarkup([
         InlineKeyboardButton("▶️ YouTube", url="https://www.youtube.com/@AK_GAMER_900K"),
     ],
     [
-        InlineKeyboardButton("📸 Instagram", url="https://www.instagram.com/ak_gamer_60k?igsh=MWtsbG85cHdrbGoydw=="),
+        InlineKeyboardButton("📸 Instagram", url="https://www.instagram.com/ak_gamer_60k"),
         InlineKeyboardButton("👑 Owner", url="https://t.me/ak_gamers"),
     ],
 ])
+
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "✅ Welcome Bot is Running!"
-    )
+    await update.message.reply_text("✅ Welcome Bot is Running!")
 
 
 async def welcome(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -57,27 +53,34 @@ async def welcome(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for member in update.message.new_chat_members:
         name = member.mention_html()
 
-        await update.effective_chat.send_message(
-    WELCOME_TEXT.format(name=name),
-    parse_mode="HTML",
-    reply_markup=buttons,
-)
-            chat_id=update.effective_chat.id,
-            photo=PHOTO_ID,
-            caption=WELCOME_TEXT.format(name=name),
-            parse_mode="HTML",
-            reply_markup=buttons,
-        )
-def main():
-    app = Application.builder().token(BOT_TOKEN).build()
+        try:
+            await context.bot.send_photo(
+                chat_id=update.effective_chat.id,
+                photo=PHOTO_ID,
+                caption=WELCOME_TEXT.format(name=name),
+                parse_mode="HTML",
+                reply_markup=buttons,
+            )
+        except Exception as e:
+            print("Photo Error:", e)
 
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(
+            await update.effective_chat.send_message(
+                text=WELCOME_TEXT.format(name=name),
+                parse_mode="HTML",
+                reply_markup=buttons,
+            )
+
+
+def main():
+    application = Application.builder().token(BOT_TOKEN).build()
+
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(
         MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, welcome)
     )
 
     print("✅ Bot Started...")
-    app.run_polling()
+    application.run_polling()
 
 
 if __name__ == "__main__":
