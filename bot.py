@@ -48,8 +48,8 @@ buttons = InlineKeyboardMarkup([
     [
         InlineKeyboardButton("📸 Instagram", url="https://www.instagram.com/ak_gamer_60k?igsh=MWtsbG85cHdrbGoydw=="),
         InlineKeyboardButton("👑 Owner", url="https://t.me/ak_gamers")
-    ]
-])async def welcome(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    
+async def welcome(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message or not update.message.new_chat_members:
         return
 
