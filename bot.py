@@ -1,3 +1,14 @@
+import telebot
+
+TOKEN = "8870938287:AAHXMEPO2qf432pPfSpIZuzW2cWgus6AD5k"
+
+bot = telebot.TeleBot(TOKEN)
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.send_message(message.chat.id, "👋 Welcome to AK GAMER CHAT")
+
+bot.infinity_polling()
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
 
